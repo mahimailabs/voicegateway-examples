@@ -97,6 +97,5 @@ To start a fresh example instead of editing this one, copy [../../templates/voic
 
 ## See also
 
-- Root [README.md](../../README.md): repo-wide overview and how this repo differs from 'awesome-voice-apps'.
-- [INDEX.md](../../INDEX.md): catalog of all release-paired examples in the repo.
+- Root [README.md](../../README.md): repo-wide overview, the catalog of all release-paired examples, and how this repo differs from 'awesome-voice-apps'.
 - [CLAUDE.md](../../CLAUDE.md): repo-wide conventions (naming, packaging, scope, tone).

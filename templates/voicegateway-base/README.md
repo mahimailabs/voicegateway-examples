@@ -59,11 +59,11 @@ Replace this README with one focused on the example:
 - The paired 'voicegateway' release (e.g. v0.0.5).
 - The five-minute setup path (clone, '.env', 'uv sync', 'uv run').
 - A "what you'll see when it works" section.
-- A link back to the root 'README.md' and 'INDEX.md'.
+- A link back to the root 'README.md'.
 
-### 5. Add a row to 'INDEX.md'
+### 5. Add a row to the Catalog table in the root 'README.md'
 
-In the catalog table at the repo root, append one row: example slug, title, one-line summary, paired 'voicegateway' release, and a link to the folder. Every folder under 'examples/' must have a row in 'INDEX.md', and every row must link to a real folder.
+Append one row: example slug (linked to the folder), one-line description of what the example demonstrates, and the paired 'voicegateway' release. Every folder under 'examples/' must have a row in that table, and every row must link to a real folder.
 
 ## What success looks like
 

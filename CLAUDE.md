@@ -48,7 +48,7 @@ Refinery and Foundry documents live exclusively in Linear and are never committe
 ## Scope rules
 
 - Examples are added only as a release-pairing exercise. A new 'voicegateway' release means at most one new example folder, demonstrating what changed in that release.
-- Every example README states the paired 'voicegateway' version explicitly. 'INDEX.md' is the catalog of those pairings.
+- Every example README states the paired 'voicegateway' version explicitly. The catalog table in the root 'README.md' lists every pairing.
 - Apply the fail-the-test rule (above) before merging any new example.
 
 ## Tone rules
@@ -64,5 +64,5 @@ These apply to all narrative prose in this repo (READMEs, this file, Ralph artif
 
 - Adding a new example for a 'voicegateway' release: copy 'templates/voicegateway-base/' and follow its README.
 - Understanding the layout: 'README.md' at the repo root.
-- Catalog of every release-paired example: 'INDEX.md' at the repo root.
+- Catalog of every release-paired example: the table in 'README.md' at the repo root.
 - Per-milestone work in flight: '.agents/' (gitignored) and the milestone Linear documents.

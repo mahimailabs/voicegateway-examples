@@ -1,67 +1,47 @@
 # voicegateway-examples
 
-Working voice-agent examples paired to specific releases of [voicegateway](https://github.com/mahimailabs/voicegateway). Every example here proves that one release of the SDK does what its release notes claim. Open one folder, run two commands, hear the agent talk.
+Working voice agents you can run in five minutes, each paired to a real release of [voicegateway](https://github.com/mahimailabs/voicegateway).
 
-## What this is
+Every folder under 'examples/' is a self-contained, uv-managed Python project that wires up real STT, LLM, and TTS providers through 'voicegateway', demonstrates one capability of a specific release, and runs end-to-end on a clean machine. Pick a release, open the matching folder, run two commands, hear the agent talk.
 
-A small, opinionated catalog. Each entry under 'examples/' is a self-contained, uv-managed Python project that:
+## Catalog
 
-- Pins one specific 'voicegateway' release.
-- Demonstrates a capability that release added or fixed.
-- Runs end-to-end on a clean machine in roughly five minutes.
-
-If you want a broad survey of voice-agent ideas across SDKs, see the sister repo 'awesome-voice-apps'. This repo is narrower on purpose: one SDK, one example per release, every example tied to a feature in that release.
-
-## Who it is for
-
-- Developers evaluating 'voicegateway' who want a runnable proof, not a marketing page.
-- Existing 'voicegateway' users tracking what changed in a new release.
-- Contributors building demos: copy 'templates/voicegateway-base/' and follow its README.
-
-If you have never written a Python voice agent before, start at 'examples/01-hello-voicegateway/'. The example is intentionally minimal so you can see every wire.
-
-## How this repo differs from 'awesome-voice-apps'
-
-| | this repo | 'awesome-voice-apps' |
+| Example | What it demonstrates | Paired release |
 | --- | --- | --- |
-| Scope | one SDK ('voicegateway') | many SDKs and patterns |
-| Bar to merge | release-paired, fail-the-test rule | breadth and inspiration |
-| Cadence | one example per 'voicegateway' release | open-ended |
-| Catalog | 'INDEX.md' (this repo) | curated list in that repo |
+| [01-hello-voicegateway](./examples/01-hello-voicegateway/) | Hello-world voice agent that prints a per-modality cost summary at the end of each call. | v0.0.5 |
 
-The fail-the-test rule. If you can swap 'voicegateway' out for any other inference router and the example still passes, the example does not belong here. It belongs in 'awesome-voice-apps'.
+A new release of 'voicegateway' means at most one new row in this table.
 
-## Where to start
+## Quick start
 
-1. Read [examples/01-hello-voicegateway/](./examples/01-hello-voicegateway/). Five minutes from clone to a talking agent.
-2. Browse [INDEX.md](./INDEX.md) for the full catalog of release-paired examples.
-3. To add a new example, copy [templates/voicegateway-base/](./templates/voicegateway-base/) and follow its README.
-
-## Repo layout
-
-```text
-voicegateway-examples/
-├── CLAUDE.md                      Operating playbook for AI agents and contributors.
-├── INDEX.md                       Catalog: example slug → paired voicegateway release.
-├── LICENSE                        MIT.
-├── README.md                      You are here.
-├── .claude/                       Claude Code project config (committed).
-│   ├── agents/
-│   ├── skills/
-│   └── slash-commands/
-├── templates/
-│   └── voicegateway-base/         Canonical starter. Copy to begin a new example.
-│       ├── agent.py
-│       ├── pyproject.toml
-│       ├── .env.example
-│       └── README.md
-└── examples/
-    └── 01-hello-voicegateway/     Start here. Paired to voicegateway v0.0.5.
-        ├── agent.py
-        ├── pyproject.toml
-        ├── .env.example
-        └── README.md
+```bash
+git clone https://github.com/mahimailabs/voicegateway-examples.git
+cd voicegateway-examples/examples/01-hello-voicegateway
+cp .env.example .env       # then fill DEEPGRAM_API_KEY, OPENAI_API_KEY,
+                           # CARTESIA_API_KEY, VOICEGATEWAY_URL, VOICEGATEWAY_TOKEN
+uv sync
+uv run agent.py dev
 ```
+
+Connect from any LiveKit client and talk to the agent. When the call ends, the terminal prints the cost-by-modality summary for the call. Full prerequisites, success signals, and troubleshooting are in the example's own [README](./examples/01-hello-voicegateway/).
+
+## What's NOT here
+
+This repo is narrow on purpose. If you want a broad gallery of voice-agent ideas across many SDKs, models, and patterns, see the sister repo 'awesome-voice-apps'. The bar there is breadth and inspiration. The bar here is much narrower:
+
+- Every example is paired to a specific 'voicegateway' release.
+- Every example demonstrates a capability that release added or fixed.
+- The fail-the-test rule: if you can swap 'voicegateway' out for any other inference router and the example still works, the example does not belong here. Move it to 'awesome-voice-apps'.
+
+## Adding a new example
+
+When a new 'voicegateway' release ships:
+
+1. Copy [templates/voicegateway-base/](./templates/voicegateway-base/) to 'examples/NN-kebab-case-slug/' and follow that template's README.
+2. Edit the marked swap points in 'agent.py' to demonstrate the new release's capability.
+3. Append one row to the Catalog table above: slug, what it demonstrates, paired release.
+
+The full conventions (naming, packaging, scope, tone, the Refinery / Foundry / Ralph pipeline) live in [CLAUDE.md](./CLAUDE.md).
 
 ## License
 
