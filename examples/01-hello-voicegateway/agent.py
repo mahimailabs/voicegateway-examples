@@ -42,9 +42,11 @@ GREETING = (
     "Ask me anything about voicegateway, or say goodbye to end the call."
 )
 
-# Model strings stay env-driven (same as the base template).
-STT_MODEL = os.environ.get("STT_MODEL", "nova-2")
-LLM_MODEL = os.environ.get("LLM_MODEL", "gpt-4o-mini")
+# Model strings stay env-driven (same as the base template). 'voicegateway'
+# expects 'provider/model' format; the prefix selects the backend.
+STT_MODEL = os.environ.get("STT_MODEL", "deepgram/nova-3")
+LLM_MODEL = os.environ.get("LLM_MODEL", "openai/gpt-4o-mini")
+TTS_MODEL = os.environ.get("TTS_MODEL", "cartesia/sonic-3")
 TTS_VOICE = os.environ.get("TTS_VOICE", "f786b574-daa5-4673-aa0c-cbe3e8534c02")
 
 
@@ -140,9 +142,9 @@ async def entrypoint(ctx: JobContext) -> None:
     ctx.add_shutdown_callback(on_shutdown)
 
     session = AgentSession(
-        stt=inference.deepgram.STT(model=STT_MODEL),
-        llm=inference.openai.LLM(model=LLM_MODEL),
-        tts=inference.cartesia.TTS(voice=TTS_VOICE),
+        stt=inference.STT(model=STT_MODEL),
+        llm=inference.LLM(model=LLM_MODEL),
+        tts=inference.TTS(model=TTS_MODEL, voice=TTS_VOICE),
     )
 
     await session.start(room=ctx.room, agent=HelloAgent())

@@ -43,15 +43,15 @@ Open 'agent.py' and edit each marked swap point so it demonstrates one capabilit
 
 - 'SWAP 1', system prompt. Rewrite 'INSTRUCTIONS' for the example's persona and goal.
 - 'SWAP 2', greeting. Rewrite 'GREETING' for the example's opening line.
-- 'SWAP 3', model strings. Override 'STT_MODEL', 'LLM_MODEL', or 'TTS_VOICE' defaults if the release adds support for a specific model.
-- 'SWAP 4', STT, LLM, TTS factories. Switch providers or add tools, function calls, or guardrails here.
+- 'SWAP 3', model strings. Override 'STT_MODEL', 'LLM_MODEL', 'TTS_MODEL', or 'TTS_VOICE' defaults if the release adds support for a specific model. Format is 'provider/model' (for example 'deepgram/nova-3').
+- 'SWAP 4', STT, LLM, TTS factories. Switch providers by changing the model-string prefix (or add tools, function calls, or guardrails). API keys are managed via 'voicegw onboard', not via env.
 - 'SWAP 5', opening turn. Replace 'session.generate_reply' with a richer flow if the example warrants it.
 
 Optionally rename the 'BaseAgent' class to something descriptive ('HelloAgent', 'PricingAgent', etc.).
 
 ### 4. Update '.env.example' and rewrite 'README.md'
 
-If the example introduces new environment variables, add them to '.env.example' with placeholder values and a one-line comment. Do not remove the five required keys.
+If the example introduces new environment variables, add them to '.env.example' with placeholder values and a one-line comment. Do not remove the required keys (LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET, VOICEGATEWAY_URL, VOICEGATEWAY_TOKEN). Provider keys are NOT in '.env'; they live in 'voicegw.yaml' (managed by 'voicegw onboard').
 
 Replace this README with one focused on the example:
 
@@ -67,7 +67,7 @@ Append one row: example slug (linked to the folder), one-line description of wha
 
 ## What success looks like
 
-Running 'uv sync' followed by 'uv run voicegateway-base' (or 'uv run NN-your-slug' once you have renamed the script) prints standard livekit-agents worker startup logs and, on the first call into the dev room, the agent speaks the greeting line through your TTS provider. If you can hear the greeting, the wiring is correct.
+After 'uv sync', a one-time 'uv run voicegw onboard' to create 'voicegw.yaml' with your provider keys, and 'cp .env.example .env' filled with your LiveKit and VoiceGateway values, running 'uv run voicegateway-base dev' (or 'uv run NN-your-slug dev' once you have renamed the script) prints standard livekit-agents worker startup logs. On the first call into the dev room, the agent speaks the greeting line through your TTS provider. If you can hear the greeting, the wiring is correct. If anything looks off at any step, 'uv run voicegw doctor' prints a numbered punch list with fix actions.
 
 ## Note on the 'voicegateway' pin
 

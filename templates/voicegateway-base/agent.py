@@ -41,9 +41,13 @@ GREETING = "Hello, this is the voicegateway base template. How can I help?"
 
 # ### SWAP 3: Provider model strings.
 # Sourced from environment variables so the same agent can be re-targeted
-# without code edits. Defaults match the '.env.example' shipped alongside.
-STT_MODEL = os.environ.get("STT_MODEL", "nova-2")
-LLM_MODEL = os.environ.get("LLM_MODEL", "gpt-4o-mini")
+# without code edits. The 'voicegateway' factory takes a single model string
+# in the 'provider/model' format (for example 'deepgram/nova-3'); the
+# provider prefix selects the underlying livekit-plugins backend. Defaults
+# match the '.env.example' shipped alongside.
+STT_MODEL = os.environ.get("STT_MODEL", "deepgram/nova-3")
+LLM_MODEL = os.environ.get("LLM_MODEL", "openai/gpt-4o-mini")
+TTS_MODEL = os.environ.get("TTS_MODEL", "cartesia/sonic-3")
 TTS_VOICE = os.environ.get("TTS_VOICE", "f786b574-daa5-4673-aa0c-cbe3e8534c02")
 
 
@@ -62,15 +66,16 @@ async def entrypoint(ctx: JobContext) -> None:
     await ctx.connect()
 
     # ### SWAP 4: STT, LLM, TTS factories.
-    # 'voicegateway.inference' returns drop-in livekit-agents factories that
-    # transparently route through your VoiceGateway deployment. To switch
-    # providers (for example, elevenlabs instead of cartesia), change the
-    # attribute accessor here. To switch model strings, edit the env vars
-    # in '.env' (see SWAP 3).
+    # 'inference.STT/LLM/TTS' are generic factories. Each resolves the
+    # provider (the prefix before '/' in the model string), looks up its
+    # API key from the active 'voicegw' project, and returns a drop-in
+    # livekit-plugins instance wrapped for cost and latency tracking.
+    # To switch providers, change the prefix in the matching env var
+    # (see SWAP 3). API keys are managed via 'voicegw onboard'.
     session = AgentSession(
-        stt=inference.deepgram.STT(model=STT_MODEL),
-        llm=inference.openai.LLM(model=LLM_MODEL),
-        tts=inference.cartesia.TTS(voice=TTS_VOICE),
+        stt=inference.STT(model=STT_MODEL),
+        llm=inference.LLM(model=LLM_MODEL),
+        tts=inference.TTS(model=TTS_MODEL, voice=TTS_VOICE),
     )
 
     await session.start(room=ctx.room, agent=BaseAgent())

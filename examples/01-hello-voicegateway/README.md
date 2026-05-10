@@ -14,7 +14,7 @@ A minimum-viable voicegateway-instrumented LiveKit Agent with three example-spec
 
 - Python 3.11 or newer ('voicegateway' requires it).
 - 'uv' installed. See https://docs.astral.sh/uv/ for one-line install instructions.
-- API keys for Deepgram, OpenAI, and Cartesia.
+- API keys for Deepgram, OpenAI, and Cartesia (added via 'voicegw onboard' in step 3, not via env).
 - A VoiceGateway deployment URL and token. Optional for the first run; the example skips the cost query gracefully if unset.
 - A LiveKit dev environment (LiveKit Cloud or a local dev server) so a client can join the agent's room.
 
@@ -27,27 +27,35 @@ A minimum-viable voicegateway-instrumented LiveKit Agent with three example-spec
    cd voicegateway-examples/examples/01-hello-voicegateway
    ```
 
-2. Copy and fill the env file:
-
-   ```bash
-   cp .env.example .env
-   $EDITOR .env  # fill DEEPGRAM_API_KEY, OPENAI_API_KEY, CARTESIA_API_KEY,
-                 # VOICEGATEWAY_URL, VOICEGATEWAY_TOKEN
-   ```
-
-3. Install dependencies:
+2. Install dependencies:
 
    ```bash
    uv sync
    ```
 
-4. Run the agent against your LiveKit dev room:
+3. One-time 'voicegw' setup. Creates 'voicegw.yaml' with your project, providers, and keys:
+
+   ```bash
+   uv run voicegw onboard
+   ```
+
+   This five-question wizard records your Deepgram, OpenAI, and Cartesia keys in 'voicegw.yaml' (treated like a credential file; do not commit it). If anything later looks off, run 'uv run voicegw doctor' for a diagnostic punch list.
+
+4. Fill the env file (LiveKit and VoiceGateway deployment values, no provider keys):
+
+   ```bash
+   cp .env.example .env
+   $EDITOR .env  # fill LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET,
+                 # VOICEGATEWAY_URL, VOICEGATEWAY_TOKEN
+   ```
+
+5. Run the agent against your LiveKit dev room:
 
    ```bash
    uv run agent.py dev
    ```
 
-5. Connect from any LiveKit client (CLI, web, or mobile) and start talking.
+6. Connect from any LiveKit client (CLI, web, or mobile) and start talking.
 
 ## What you'll see when it works
 
