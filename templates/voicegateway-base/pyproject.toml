@@ -3,7 +3,7 @@ name = "voicegateway-base"
 version = "0.1.0"
 description = "Canonical starter for voicegateway-instrumented LiveKit Agents. Copy this folder to begin a new example."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Mahimai Raja J" }]
 
@@ -26,6 +26,12 @@ voicegateway-base = "agent:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+# Required so the 'voicegateway @ git+...' direct reference is accepted while
+# v0.0.5 is not yet on PyPI. Once the PyPI pin is active, this flag can be
+# removed.
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 only-include = ["agent.py"]
