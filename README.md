@@ -25,13 +25,6 @@ uv run agent.py dev
 
 Connect from any LiveKit client and talk to the agent. When the call ends, the terminal prints the cost-by-modality summary for the call. Full prerequisites, success signals, and troubleshooting are in the example's own [README](./examples/01-hello-voicegateway/).
 
-## What's NOT here
-
-This repo is narrow on purpose. If you want a broad gallery of voice-agent ideas across many SDKs, models, and patterns, see the sister repo 'awesome-voice-apps'. The bar there is breadth and inspiration. The bar here is much narrower:
-
-- Every example is paired to a specific 'voicegateway' release.
-- Every example demonstrates a capability that release added or fixed.
-- The fail-the-test rule: if you can swap 'voicegateway' out for any other inference router and the example still works, the example does not belong here. Move it to 'awesome-voice-apps'.
 
 ## Adding a new example
 
