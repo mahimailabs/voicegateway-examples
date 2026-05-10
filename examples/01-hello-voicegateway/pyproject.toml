@@ -1,0 +1,40 @@
+[project]
+name = "01-hello-voicegateway"
+version = "0.1.0"
+description = "Introductory voicegateway example. Paired to voicegateway v0.0.5. Five-minute setup, end-of-call cost-by-modality summary."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Mahimai Raja J" }]
+
+# Dependencies are uv-managed: run 'uv sync' in this folder to install.
+#
+# 'voicegateway' is pinned to the latest stable release. The block below ships
+# the git+main install because v0.0.5 is the first cut we are pairing examples
+# with and may not be on PyPI yet at the time you read this. Once v0.0.5 lands
+# on PyPI, swap the active line for the PyPI pin and remove the README note.
+#
+# 'httpx' is added on top of the canonical starter so the example can query
+# the gateway's '/v1/costs' endpoint at the end of each call.
+dependencies = [
+    "voicegateway @ git+https://github.com/mahimailabs/voicegateway.git@main",
+    # "voicegateway==0.0.5",
+    "livekit-agents>=1.0.0,<2.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "httpx>=0.27.0,<1.0.0",
+]
+
+[project.scripts]
+01-hello-voicegateway = "agent:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+# Required so the 'voicegateway @ git+...' direct reference is accepted while
+# v0.0.5 is not yet on PyPI. Once the PyPI pin is active, this flag can be
+# removed.
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+only-include = ["agent.py"]
